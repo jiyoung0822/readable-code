@@ -40,28 +40,19 @@ public class MinesweeperGame {
             if (doesUserChooseToPlantFlag(userActionInput)) {
                 BOARD[selectedRowIndex][selectedColIndex] = FLAG_SIGN;
                 checkIfGameIsOver();
-            } else if (doesUserChooseToOpenCell(userActionInput)) {
+                return;
+            }
+            if (doesUserChooseToOpenCell(userActionInput)) {
                 if (isLandMineCell(selectedRowIndex, selectedColIndex)) {
                     BOARD[selectedRowIndex][selectedColIndex] = LAND_MINE_SIGN;
                     changeGameStatusToLose();
-                    continue;
-                } else {
-                    open(selectedRowIndex, selectedColIndex);
+                    return;
                 }
-                boolean isAllOpened = true;
-                for (int row = 0; row < 8; row++) {
-                    for (int col = 0; col < 10; col++) {
-                        if (BOARD[row][col].equals(CLOSED_CELL_SIGN)) {
-                            isAllOpened = false;
-                        }
-                    }
-                }
-                if (isAllOpened) {
-                    changeGameStatusToWin();
-                }
-            } else {
-                System.out.println("잘못된 번호를 선택하셨습니다.");
+                open(selectedRowIndex, selectedColIndex);
+                checkIfGameIsOver();
+                return;
             }
+            System.out.println("잘못된 번호를 선택하셨습니다.");
         }
     }
 
